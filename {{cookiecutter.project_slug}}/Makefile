@@ -41,6 +41,7 @@ check-isort: poetry-install
 autoflake: poetry-install
 	$(POETRY_RUN) autoflake src    \
 	  --in-place                   \
+	  --quiet                      \
 	  --recursive                  \
 	  --expand-star-imports        \
 	  --remove-all-unused-imports  \
@@ -51,6 +52,7 @@ autoflake: poetry-install
 check-autoflake: poetry-install
 	$(POETRY_RUN) autoflake src    \
 	  --check                      \
+	  --quiet                      \
 	  --recursive                  \
 	  --expand-star-imports        \
 	  --remove-all-unused-imports  \
