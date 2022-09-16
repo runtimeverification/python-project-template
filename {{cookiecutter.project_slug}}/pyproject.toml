@@ -38,3 +38,6 @@ remove-unused-variables = true
 [tool.black]
 line-length = 120
 skip-string-normalization = true
+
+[tool.mypy]
+disallow_untyped_defs = true
