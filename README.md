@@ -1,7 +1,7 @@
 # python-project-template
 
-Prerequisites: [`cookiecutter`](https://github.com/cookiecutter/cookiecutter)
+Prerequisites: [`cruft`](https://github.com/cruft/cruft)
 
 ```bash
-cookiecutter gh:runtimeverification/python-project-template
+cruft create https://github.com/runtimeverification/python-project-template
 ```
