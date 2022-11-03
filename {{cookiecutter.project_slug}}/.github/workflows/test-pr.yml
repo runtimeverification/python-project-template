@@ -5,7 +5,7 @@ on:
       - master
 concurrency:
   # Latest code is always prioritized to run per workflow per branch.
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  group: {% raw %}${{ github.workflow }}-${{ github.head_ref || github.ref_name }}{% endraw %}
   cancel-in-progress: true
 
 jobs:
@@ -27,11 +27,11 @@ jobs:
       - uses: cachix/cachix-action@v10
         with:
           name: k-framework
-          signingKey: '${{ secrets.RV_DEVOPS_CACHIX_TOKEN }}'
+          signingKey: {% raw %}'${{ secrets.RV_DEVOPS_CACHIX_TOKEN }}'{% endraw %}
           skipPush: true
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.9' 
+          python-version: '3.9'
       - name: 'Install Poetry'
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
