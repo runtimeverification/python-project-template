@@ -23,6 +23,7 @@ flake8-quotes = "*"
 isort = "*"
 mypy = "*"
 pep8-naming = "*"
+pytest = "*"
 
 [tool.isort]
 profile = "black"

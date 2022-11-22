@@ -24,7 +24,7 @@ POETRY_RUN := poetry run
 test: test-unit
 
 test-unit: poetry-install
-	$(POETRY_RUN) python -m unittest discover tests --failfast --verbose
+	$(POETRY_RUN) pytest src/tests --maxfail=1 --verbose
 
 
 # Checks and formatting
