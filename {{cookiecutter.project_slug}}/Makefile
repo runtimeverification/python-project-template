@@ -6,7 +6,7 @@
 
 default: check test-unit
 
-all: check test-unit test-integration
+all: check test
 
 clean:
 	rm -rf dist .mypy_cache
