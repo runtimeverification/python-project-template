@@ -1,10 +1,12 @@
-.PHONY: default all clean build install          \
-        poetry-install                           \
-        test test-unit                           \
-        format isort autoflake black             \
+.PHONY: default all clean build install \
+        poetry-install                  \
+        test test-unit test-integration \
+        format isort autoflake black    \
         check check-isort check-autoflake check-black check-flake8 check-mypy
 
 default: check test-unit
+
+all: check test-unit test-integration
 
 clean:
 	rm -rf dist .mypy_cache
@@ -21,10 +23,13 @@ POETRY_RUN := poetry run
 
 # Tests
 
-test: test-unit
+test: test-unit test-integration
 
 test-unit: poetry-install
-	$(POETRY_RUN) pytest src/tests --maxfail=1 --verbose
+	$(POETRY_RUN) pytest src/tests/unit --maxfail=1 --verbose $(TEST_ARGS)
+
+test-integration: poetry-install
+	$(POETRY_RUN) pytest src/tests/integration --numprocesses=4 --durations=0 --maxfail=1 --verbose $(TEST_ARGS)
 
 
 # Checks and formatting

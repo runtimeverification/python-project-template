@@ -33,7 +33,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ./test-project
-          key: test-project-${{ github.run_id }}V
+          key: test-project-${{ github.run_id }}
 
   template-tests:
     name: 'Test Template'
@@ -57,7 +57,7 @@ jobs:
           path: ./test-project
           key: test-project-${{ github.run_id }}
       - name: 'Run tests'
-        run: make -C test-project
+        run: make -C test-project all
 
   nix-build:
     name: 'Build with Nix'
