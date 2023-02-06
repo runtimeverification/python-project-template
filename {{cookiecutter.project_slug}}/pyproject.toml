@@ -24,6 +24,8 @@ isort = "*"
 mypy = "*"
 pep8-naming = "*"
 pytest = "*"
+pytest-mock = "*"
+pytest-xdist = "*"
 
 [tool.isort]
 profile = "black"
