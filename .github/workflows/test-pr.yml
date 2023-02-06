@@ -20,20 +20,16 @@ jobs:
       - name: 'Install cookiecutter'
         run: pip install cookiecutter
       - name: 'Install Poetry'
-        run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-          poetry --version
+        run: curl -sSL https://install.python-poetry.org | python3 - --version 1.3.2
       - name: 'Generate template'
         run: cookiecutter --no-input . project_name='Test Project'
       - name: 'Generate lock file'
-        run: |
-          cd ./test-project
-          poetry lock
+        run: poetry -C ./test-project lock
       - name: 'Cache generated project'
         uses: actions/cache@v3
         with:
           path: ./test-project
-          key: test-project-${{ github.run_id }}V
+          key: test-project-${{ github.run_id }}
 
   template-tests:
     name: 'Test Template'
@@ -48,16 +44,14 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: 'Install Poetry'
-        run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-          poetry --version
+        run: curl -sSL https://install.python-poetry.org | python3 - --version 1.3.2
       - name: 'Restore generated project'
         uses: actions/cache@v3
         with:
           path: ./test-project
           key: test-project-${{ github.run_id }}
       - name: 'Run tests'
-        run: make -C test-project
+        run: make -C test-project all
 
   nix-build:
     name: 'Build with Nix'
