@@ -8,7 +8,7 @@ all: check cov
 
 .PHONY: clean
 clean:
-	rm -rf dist .coverage .mypy_cache .pytest_cache
+	rm -rf dist .coverage cov-* .mypy_cache .pytest_cache
 	find -type d -name __pycache__ -prune -exec rm -rf {} \;
 
 .PHONY: build
