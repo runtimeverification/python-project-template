@@ -4,11 +4,11 @@ POETRY_RUN := $(POETRY) run
 
 default: check test-unit
 
-all: check test
+all: check cov
 
 .PHONY: clean
 clean:
-	rm -rf dist .mypy_cache .pytest_cache
+	rm -rf dist .coverage .mypy_cache .pytest_cache
 	find -type d -name __pycache__ -prune -exec rm -rf {} \;
 
 .PHONY: build
@@ -35,6 +35,23 @@ test-unit: poetry-install
 test-integration: poetry-install
 	$(POETRY_RUN) pytest src/tests/integration --maxfail=1 --verbose --durations=0 --numprocesses=4 --dist=worksteal $(TEST_ARGS)
 
+
+# Coverage
+
+COV_ARGS :=
+
+cov: cov-all
+
+cov-%: TEST_ARGS += --cov={{ cookiecutter.package_name }} --no-cov-on-fail --cov-branch --cov-report=term
+
+cov-all: TEST_ARGS += --cov-report=html:cov-all-html $(COV_ARGS)
+cov-all: test-all
+
+cov-unit: TEST_ARGS += --cov-report=html:cov-unit-html $(COV_ARGS)
+cov-unit: test-unit
+
+cov-integration: TEST_ARGS += --cov-report=html:cov-integration-html $(COV_ARGS)
+cov-integration: test-integration
 
 
 # Checks and formatting
