@@ -1,20 +1,17 @@
-.PHONY: default all clean build install \
-        poetry-install                  \
-        test test-unit test-integration \
-        format isort autoflake black    \
-        check check-isort check-autoflake check-black check-flake8 check-mypy
-
 default: check test-unit
 
 all: check test
 
+.PHONY: clean
 clean:
 	rm -rf dist .mypy_cache
 	find -type d -name __pycache__ -prune -exec rm -rf {} \;
 
+.PHONY: build
 build:
 	poetry build
 
+.PHONY: poetry-install
 poetry-install:
 	poetry install
 
