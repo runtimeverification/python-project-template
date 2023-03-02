@@ -4,7 +4,7 @@ all: check test
 
 .PHONY: clean
 clean:
-	rm -rf dist .mypy_cache
+	rm -rf dist .mypy_cache .pytest_cache
 	find -type d -name __pycache__ -prune -exec rm -rf {} \;
 
 .PHONY: build
