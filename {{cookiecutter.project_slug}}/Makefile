@@ -22,13 +22,15 @@ poetry-install:
 
 # Tests
 
+TEST_ARGS :=
+
 test: test-unit test-integration
 
 test-unit: poetry-install
 	$(POETRY_RUN) pytest src/tests/unit --maxfail=1 --verbose $(TEST_ARGS)
 
 test-integration: poetry-install
-	$(POETRY_RUN) pytest src/tests/integration --numprocesses=4 --durations=0 --maxfail=1 --verbose $(TEST_ARGS)
+	$(POETRY_RUN) pytest src/tests/integration --maxfail=1 --verbose --durations=0 --numprocesses=4 $(TEST_ARGS)
 
 
 # Checks and formatting
