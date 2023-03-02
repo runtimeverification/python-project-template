@@ -1,3 +1,7 @@
+POETRY     := poetry
+POETRY_RUN := $(POETRY) run
+
+
 default: check test-unit
 
 all: check test
@@ -9,13 +13,11 @@ clean:
 
 .PHONY: build
 build:
-	poetry build
+	$(POETRY) build
 
 .PHONY: poetry-install
 poetry-install:
-	poetry install
-
-POETRY_RUN := poetry run
+	$(POETRY) install
 
 
 # Tests
