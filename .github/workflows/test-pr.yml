@@ -52,6 +52,8 @@ jobs:
           key: test-project-${{ github.run_id }}
       - name: 'Run tests'
         run: make -C test-project all
+      - name: 'Run pyupgrade'
+        run: make -C test-project pyupgrade
 
   nix-build:
     name: 'Build with Nix'
