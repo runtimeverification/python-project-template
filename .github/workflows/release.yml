@@ -1,6 +1,9 @@
 name: Publish Python 🐍 distributions 📦 to PyPI and TestPyPI
 on: 
   workflow_dispatch:
+  push:
+    branches:
+      feature/release-publish-workflow
 
 jobs:
   build-n-publish:
@@ -20,9 +23,9 @@ jobs:
         password: ${{ secrets.PYPI_DEPLOY_TOKEN_TEST }}
         repository-url: https://test.pypi.org/legacy/
 
-    - name: Publish distribution 📦 to PyPI
-      if: startsWith(github.ref, 'refs/tags')
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ secrets.PYPI_DEPLOY_TOKEN }}
+    # - name: Publish distribution 📦 to PyPI
+    #   if: startsWith(github.ref, 'refs/tags')
+    #   uses: pypa/gh-action-pypi-publish@release/v1
+    #   with:
+    #     password: ${{ secrets.PYPI_DEPLOY_TOKEN }}
         
