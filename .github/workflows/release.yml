@@ -6,26 +6,65 @@ on:
       feature/release-publish-workflow
 
 jobs:
-  build-n-publish:
-    name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
-    runs-on: ubuntu-latest
-
+  template-generation:
+    name: 'Generate Template'
+    runs-on: [self-hosted, linux, normal-ephemeral]
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.x"
+      - name: 'Check out code'
+        uses: actions/checkout@v3
 
-    - name: Publish distribution 📦 to Test PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ secrets.PYPI_DEPLOY_TOKEN_TEST }}
-        repository-url: https://test.pypi.org/legacy/
+      - name: 'Install Python'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-    # - name: Publish distribution 📦 to PyPI
-    #   if: startsWith(github.ref, 'refs/tags')
-    #   uses: pypa/gh-action-pypi-publish@release/v1
-    #   with:
-    #     password: ${{ secrets.PYPI_DEPLOY_TOKEN }}
+      - name: 'Install cookiecutter'
+        run: pip install cookiecutter
+
+      - name: 'Install Poetry'
+        run: curl -sSL https://install.python-poetry.org | python3 - --version 1.3.2
+
+      - name: 'Generate template'
+        run: cookiecutter --no-input . project_name='Test Project'
+
+      - name: 'Generate lock file'
+        run: poetry -C ./test-project lock
+
+      - name: 'Cache generated project'
+        uses: actions/cache@v3
+        with:
+          path: ./test-project
+          key: test-project-${{ github.run_id }}
+
+  template-tests-release-publish:
+    name: 'Test Release Publish Python 🐍 distributions 📦 to TestPyPI'
+    needs: template-generation
+    runs-on: [self-hosted, normal-ephemeral]
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11']
+    steps:
+      - name: 'Install Python'
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: 'Install Poetry'
+        run: curl -sSL https://install.python-poetry.org | python3 - --version 1.3.2
+
+      - name: 'Restore generated project'
+        uses: actions/cache@v3
+        with:
+          path: ./test-project
+          key: test-project-${{ github.run_id }}
+      
+      - name: 'Build & Package'
+        run: |
+          make all
+          pip wheel .
+      
+      - name: Publish distribution 📦 to Test PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
         
