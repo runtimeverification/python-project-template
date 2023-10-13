@@ -63,10 +63,10 @@ jobs:
           path: ./test-project
           key: test-project-${{ github.run_id }}
       
-      - name: 'Build, Package, Publish'
+      - name: 'Package'
         run: |
           cd ./test-project
           poetry build
 
-      - name: Publish package distributions to PyPI
+      - name: Publish package distributions to TestPyPI
         uses: pypa/gh-action-pypi-publish@release/v1
