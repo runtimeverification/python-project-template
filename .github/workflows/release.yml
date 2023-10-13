@@ -60,11 +60,6 @@ jobs:
       
       - name: 'Build & Package'
         run: |
-          make all
-          pip wheel .
-      
-      - name: Publish distribution 📦 to Test PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
+          poetry build
+          poetry test
         
