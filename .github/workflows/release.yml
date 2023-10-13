@@ -60,6 +60,7 @@ jobs:
       
       - name: 'Build, Package, Publish'
         run: |
+          cd ./test-project
           poetry build
-          poetry test
+          poetry publish
         
