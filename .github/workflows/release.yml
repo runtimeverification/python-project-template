@@ -43,6 +43,11 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.10', '3.11']
+    environment:
+      name: release
+      url: https://test.pypi.org/RuntimeVerificationTest
+    permissions:
+      id-token: write
     steps:
       - name: 'Install Python'
         uses: actions/setup-python@v4
@@ -62,5 +67,5 @@ jobs:
         run: |
           cd ./test-project
           poetry build
-          poetry publish
-        
+
+          
