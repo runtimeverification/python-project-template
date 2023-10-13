@@ -8,7 +8,7 @@ on:
 jobs:
   template-generation:
     name: 'Generate Template'
-    runs-on: [self-hosted, linux, normal-ephemeral]
+    runs-on: ubuntu-latest
     steps:
       - name: 'Check out code'
         uses: actions/checkout@v3
@@ -39,7 +39,7 @@ jobs:
   template-tests-release-publish:
     name: 'Test Release Publish Python 🐍 distributions 📦 to TestPyPI'
     needs: template-generation
-    runs-on: [self-hosted, normal-ephemeral]
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ['3.10', '3.11']
@@ -58,7 +58,7 @@ jobs:
           path: ./test-project
           key: test-project-${{ github.run_id }}
       
-      - name: 'Build & Package'
+      - name: 'Build, Package, Publish'
         run: |
           poetry build
           poetry test
