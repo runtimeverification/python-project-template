@@ -1,7 +1,7 @@
 {
   description = "{{ cookiecutter.project_slug }} - {{ cookiecutter.description }}";
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-22.05";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     poetry2nix.url = "github:nix-community/poetry2nix";
   };
