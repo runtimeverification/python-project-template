@@ -1,7 +1,7 @@
 {
   description = "{{ cookiecutter.project_slug }} - {{ cookiecutter.description }}";
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
     uv2nix.url = "github:pyproject-nix/uv2nix/680e2f8e637bc79b84268949d2f2b2f5e5f1d81c";
     # stale nixpkgs is missing the alias `lib.match` -> `builtins.match`
