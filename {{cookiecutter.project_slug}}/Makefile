@@ -13,7 +13,7 @@ clean:
 
 .PHONY: build
 build:
-	$(uv) build
+	$(UV) build
 
 
 # Tests
